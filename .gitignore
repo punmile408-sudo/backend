@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment variables
+.env
+.env.*            # เช่น .env.local, .env.production
+
+# Local env files
+*.local
+
+# OS junk files
+.DS_Store
+Thumbs.db
+
+# Build output (ถ้ามี)
+dist/
+build/
+
+# Editor settings
+.vscode/
+.idea/
+
+# Typescript (ถ้าใช้)
+*.tsbuildinfo
+
+# Railway
+railway.toml
