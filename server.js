@@ -33,6 +33,29 @@ app.post('/register', async (req, res) => {
     }
 })
 
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body
+
+        const user = await User.findOne({ username })
+        if (!user) {
+            return res.status(400).json({ message: 'User not found' })
+        }
+
+        if (password !== user.password) {
+            return res.status(400).json({ message: 'Invalid password' })
+        }
+
+        const userResponse = user.toObject()
+        delete userResponse.password
+
+        res.status(200).json({ message: 'Login Success', user: userResponse })
+    } catch (err) {
+        console.error(err.message)
+        res.status(500).json({ message: 'Server Error', error: err.message })
+    }
+})
+
 module.exports = app
 
 if (require.main === module) {
