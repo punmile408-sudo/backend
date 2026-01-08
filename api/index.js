@@ -1,7 +1,6 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const connectDB = require('./db')
 const app = express()
 
 app.use(cors())
@@ -19,15 +18,13 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('pbookuser', userSchema)
 
 app.get('/', (req, res) => {
-    res.json({ message: 'Punmile is Gooooooddddddddd and riceeeeeeeeeeeeeeeeeeeeeeeeeeeeee' })
+    res.json({ message: 'Update database' })
 })
 
 app.post('/register', async (req, res) => {
     const { username, password } = req.body
 
     try {
-        await connectDB()
-
         const newUser = new User({ username, password })
         await newUser.save()
         res.status(201).json({ message: 'User registered successfully' })
@@ -36,7 +33,7 @@ app.post('/register', async (req, res) => {
             return res.status(400).json({ error: 'Username already exists' });
         }
 
-        res.status(400).json({ error: 'Error registering user' })
+        res.status(400).json({ error: 'Error registering user', err: error.message })
     }
 })
 
