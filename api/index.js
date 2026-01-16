@@ -37,4 +37,18 @@ app.post('/register', async (req, res) => {
     }
 })
 
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body
+
+    try {
+        const user = await User.findOne({ username })
+        if (!user || user.password !== password) {
+            return res.status(401).json({ error: 'Invalid username or password' })
+        }
+        res.json({ message: 'Login successful', user: { username: user.username, password: user.password } })
+    } catch (error) {
+        res.status(500).json({ error: 'Error during login', err: error.message })
+    }
+})
+
 module.exports = app
