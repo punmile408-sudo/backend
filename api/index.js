@@ -52,6 +52,24 @@ app.post('/api/register', async (req, res) => {
     }
 })
 
+app.post('/api/login', async (req, res) => {
+    const { username, password } = req.body
+
+    try {
+        const user = await User.findOne({ username, password })
+        if (!user) {
+            return res.status(400).json({ message: 'The username or password is incorrect' })
+        }
+
+        res.status(201).json({
+            message: 'Login successfully',
+            user: { username: user.username, password: user.password }
+        })
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.messages })
+    }
+})
+
 app.get('/', (req, res) => res.send('API is running...'));
 
 module.exports = app;
