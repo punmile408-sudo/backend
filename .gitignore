@@ -1,0 +1,22 @@
+# 1. Dependency (ห้ามเอาขึ้นเพราะมันหนักมาก และติดตั้งใหม่ได้ด้วย npm install)
+node_modules/
+
+# 2. Environment Variables (สำคัญที่สุด! ห้ามให้ Password หลุดเด็ดขาด)
+.env
+.env.local
+.env.*.local
+
+# 3. Logs (ไฟล์บันทึกข้อผิดพลาดเวลา Error ไม่จำเป็นต้องเก็บไว้)
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+*.log
+
+# 4. OS metadata (ไฟล์ขยะจาก Windows หรือ Mac)
+.DS_Store
+Thumbs.db
+
+# 5. Production Build (ถ้ามีขั้นตอนการ Build เช่นใช้ร่วมกับ React)
+dist/
+build/
