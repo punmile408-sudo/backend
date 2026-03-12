@@ -29,7 +29,13 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true }
 })
 
+const PostSchema = new mongoose.Schema({
+    whopost: { type: String, required: true },
+    whatpost: { type: String, required: true }
+})
+
 const User = mongoose.models.User || mongoose.model('User', UserSchema);
+const Post = mongoose.models.Post || mongoose.model('Post', PostSchema);
 
 app.post('/api/register', async (req, res) => {
     const { username, password } = req.body
@@ -48,7 +54,7 @@ app.post('/api/register', async (req, res) => {
             user: { username: newUser.username, password: newUser.password }
         })
     } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err.messages })
+        res.status(500).json({ message: 'Server error', error: err.message })
     }
 })
 
@@ -66,7 +72,32 @@ app.post('/api/login', async (req, res) => {
             user: { username: user.username, password: user.password }
         })
     } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err.messages })
+        res.status(500).json({ message: 'Server error', error: err.message })
+    }
+})
+
+app.post('/api/post', async (req, res) => {
+    const { whopost, whatpost } = req.body
+
+    try {
+        const newPost = new Post({ whopost, whatpost })
+        await newPost.save()
+        res.status(201).json({
+            message: 'Post successfully!',
+            post: { whopost: newPost.whopost, whatpost: newPost.whatpost }
+        })
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message })
+    }
+})
+
+app.get('/api/getpost', async (req, res) => {
+    try {
+        const allpost = await Post.find().sort({ _id: -1 })
+
+        res.status(200).json(allpost)
+    } catch (err) {
+        res.status(500).json({ message: 'Server error', error: err.message })
     }
 })
 
